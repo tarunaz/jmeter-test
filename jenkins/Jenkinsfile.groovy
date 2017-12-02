@@ -1,10 +1,7 @@
 node('maven') {
-   def mvnHome, jenkinsHome, javaHome
+
    stage('Build') {
-   
-       jenkinsHome = '/var/lib/jenkins'
-       javaHome = '/usr/lib/jvm/java-1.8.0'
-    
+         
        // checkout code from GitHub
        checkout scm 
       
