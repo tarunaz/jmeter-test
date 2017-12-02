@@ -1,8 +1,7 @@
 node('maven') {
    def mvnHome, jenkinsHome, javaHome
    stage('Build') {
-       // Get the Maven tool.
-       mvnHome = tool 'M3'
+   
        jenkinsHome = '/var/lib/jenkins'
        javaHome = '/usr/lib/jvm/java-1.8.0'
     
@@ -11,7 +10,7 @@ node('maven') {
 
        // Run the maven build - note that the settings.xml is assumed to be located in jenkinsHome. This is configured by the docker
        // build that creates the slave container.
-       sh "'${mvnHome}/bin/mvn' -s ${jenkinsHome}/settings.xml clean install -DskipTests"
+       sh "mvn -s ${jenkinsHome}/settings.xml clean install -DskipTests"
    }
    stage('OpenShift Build') {
        sh "rm -rf ocp-build && mkdir -p ocp-build/deployments"
@@ -30,6 +29,6 @@ node('maven') {
        sh "sed -i \"s/hostname=.*/hostname=\$(cat ROUTE)/g\" resources/jmeter/jmeter.properties"
        sh "rm -f ROUTE"
        // Runs JMeter tests and analysis of test results
-       sh "'${mvnHome}/bin/mvn' -s ${jenkinsHome}/settings.xml jmeter:jmeter jmeter-analysis:analyze"
+       sh "mvn -s ${jenkinsHome}/settings.xml jmeter:jmeter jmeter-analysis:analyze"
    }
 }
