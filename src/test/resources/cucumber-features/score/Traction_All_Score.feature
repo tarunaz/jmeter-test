@@ -1,0 +1,279 @@
+@Traction @All @Score
+Feature: Calculate Score with All of the Parameters
+  Using BRMS rules, given all of the parameters associated with a product type,
+  figure out the total score associated with this product type
+
+  Scenario Outline: Calculate Total Score using All Parameters for Traction
+    Given a TKE unit type <unitType> for scoring
+    When the annual callback is <annualCallback>
+    And the control type is <controlType>
+    And the environment is <environment>
+    And the usage is <usage>
+    And the drive type is <driveType>
+    Then the total points is <totalPoints>
+
+    Examples: 
+      | unitType  | annualCallback | controlType    | environment | usage  | driveType    | totalPoints |
+      # First level callbacks [0,1]
+      | EL-TR-001 |              0 | microprocessor | clean       | low    | AV/VVVF      |           5 |
+      | EL-TR-002 |              0 | microprocessor | clean       | low    | SCR          |          10 |
+      | EL-TR-003 |              0 | microprocessor | clean       | low    | MG/Generator |        1000 |
+      | EL-TR-001 |              0 | microprocessor | clean       | medium | AV/VVVF      |          10 |
+      | EL-TR-002 |              0 | microprocessor | clean       | medium | SCR          |          15 |
+      | EL-TR-003 |              0 | microprocessor | clean       | medium | MG/Generator |        1005 |
+      | EL-TR-001 |              0 | microprocessor | clean       | high   | AV/VVVF      |          20 |
+      | EL-TR-002 |              0 | microprocessor | clean       | high   | SCR          |          25 |
+      | EL-TR-003 |              0 | microprocessor | clean       | high   | MG/Generator |        1015 |
+      | EL-TR-001 |              0 | microprocessor | moderate    | low    | AV/VVVF      |          10 |
+      | EL-TR-002 |              0 | microprocessor | moderate    | low    | SCR          |          15 |
+      | EL-TR-003 |              0 | microprocessor | moderate    | low    | MG/Generator |        1005 |
+      | EL-TR-001 |              0 | microprocessor | moderate    | medium | AV/VVVF      |          15 |
+      | EL-TR-002 |              0 | microprocessor | moderate    | medium | SCR          |          20 |
+      | EL-TR-003 |              0 | microprocessor | moderate    | medium | MG/Generator |        1010 |
+      | EL-TR-001 |              0 | microprocessor | moderate    | high   | AV/VVVF      |          25 |
+      | EL-TR-002 |              0 | microprocessor | moderate    | high   | SCR          |          30 |
+      | EL-TR-003 |              0 | microprocessor | moderate    | high   | MG/Generator |        1020 |
+      | EL-TR-001 |              0 | microprocessor | dirty       | low    | AV/VVVF      |          20 |
+      | EL-TR-002 |              0 | microprocessor | dirty       | low    | SCR          |          25 |
+      | EL-TR-003 |              0 | microprocessor | dirty       | low    | MG/Generator |        1015 |
+      | EL-TR-001 |              0 | microprocessor | dirty       | medium | AV/VVVF      |          25 |
+      | EL-TR-002 |              0 | microprocessor | dirty       | medium | SCR          |          30 |
+      | EL-TR-003 |              0 | microprocessor | dirty       | medium | MG/Generator |        1020 |
+      | EL-TR-001 |              0 | microprocessor | dirty       | high   | AV/VVVF      |          35 |
+      | EL-TR-002 |              0 | microprocessor | dirty       | high   | SCR          |          40 |
+      | EL-TR-003 |              0 | microprocessor | dirty       | high   | MG/Generator |        1030 |
+      | EL-TR-001 |              1 | microprocessor | clean       | low    | AV/VVVF      |           5 |
+      | EL-TR-002 |              1 | microprocessor | clean       | low    | SCR          |          10 |
+      | EL-TR-003 |              1 | microprocessor | clean       | low    | MG/Generator |        1000 |
+      | EL-TR-001 |              1 | microprocessor | clean       | medium | AV/VVVF      |          10 |
+      | EL-TR-002 |              1 | microprocessor | clean       | medium | SCR          |          15 |
+      | EL-TR-003 |              1 | microprocessor | clean       | medium | MG/Generator |        1005 |
+      | EL-TR-001 |              1 | microprocessor | clean       | high   | AV/VVVF      |          20 |
+      | EL-TR-002 |              1 | microprocessor | clean       | high   | SCR          |          25 |
+      | EL-TR-003 |              1 | microprocessor | clean       | high   | MG/Generator |        1015 |
+      | EL-TR-001 |              1 | microprocessor | moderate    | low    | AV/VVVF      |          10 |
+      | EL-TR-002 |              1 | microprocessor | moderate    | low    | SCR          |          15 |
+      | EL-TR-003 |              1 | microprocessor | moderate    | low    | MG/Generator |        1005 |
+      | EL-TR-001 |              1 | microprocessor | moderate    | medium | AV/VVVF      |          15 |
+      | EL-TR-002 |              1 | microprocessor | moderate    | medium | SCR          |          20 |
+      | EL-TR-003 |              1 | microprocessor | moderate    | medium | MG/Generator |        1010 |
+      | EL-TR-001 |              1 | microprocessor | moderate    | high   | AV/VVVF      |          25 |
+      | EL-TR-002 |              1 | microprocessor | moderate    | high   | SCR          |          30 |
+      | EL-TR-003 |              1 | microprocessor | moderate    | high   | MG/Generator |        1020 |
+      | EL-TR-001 |              1 | microprocessor | dirty       | low    | AV/VVVF      |          20 |
+      | EL-TR-002 |              1 | microprocessor | dirty       | low    | SCR          |          25 |
+      | EL-TR-003 |              1 | microprocessor | dirty       | low    | MG/Generator |        1015 |
+      | EL-TR-001 |              1 | microprocessor | dirty       | medium | AV/VVVF      |          25 |
+      | EL-TR-002 |              1 | microprocessor | dirty       | medium | SCR          |          30 |
+      | EL-TR-003 |              1 | microprocessor | dirty       | medium | MG/Generator |        1020 |
+      | EL-TR-001 |              1 | microprocessor | dirty       | high   | AV/VVVF      |          35 |
+      | EL-TR-002 |              1 | microprocessor | dirty       | high   | SCR          |          40 |
+      | EL-TR-003 |              1 | microprocessor | dirty       | high   | MG/Generator |        1030 |
+      #Second level callbacks [2,4]
+      | EL-TR-001 |              2 | microprocessor | clean       | low    | AV/VVVF      |          10 |
+      | EL-TR-002 |              2 | microprocessor | clean       | low    | SCR          |          15 |
+      | EL-TR-003 |              2 | microprocessor | clean       | low    | MG/Generator |        1005 |
+      | EL-TR-001 |              2 | microprocessor | clean       | medium | AV/VVVF      |          15 |
+      | EL-TR-002 |              2 | microprocessor | clean       | medium | SCR          |          20 |
+      | EL-TR-003 |              2 | microprocessor | clean       | medium | MG/Generator |        1010 |
+      | EL-TR-001 |              2 | microprocessor | clean       | high   | AV/VVVF      |          25 |
+      | EL-TR-002 |              2 | microprocessor | clean       | high   | SCR          |          30 |
+      | EL-TR-003 |              2 | microprocessor | clean       | high   | MG/Generator |        1020 |
+      | EL-TR-001 |              2 | microprocessor | moderate    | low    | AV/VVVF      |          15 |
+      | EL-TR-002 |              2 | microprocessor | moderate    | low    | SCR          |          20 |
+      | EL-TR-003 |              2 | microprocessor | moderate    | low    | MG/Generator |        1010 |
+      | EL-TR-001 |              2 | microprocessor | moderate    | medium | AV/VVVF      |          20 |
+      | EL-TR-002 |              2 | microprocessor | moderate    | medium | SCR          |          25 |
+      | EL-TR-003 |              2 | microprocessor | moderate    | medium | MG/Generator |        1015 |
+      | EL-TR-001 |              2 | microprocessor | moderate    | high   | AV/VVVF      |          30 |
+      | EL-TR-002 |              2 | microprocessor | moderate    | high   | SCR          |          35 |
+      | EL-TR-003 |              2 | microprocessor | moderate    | high   | MG/Generator |        1025 |
+      | EL-TR-001 |              2 | microprocessor | dirty       | low    | AV/VVVF      |          25 |
+      | EL-TR-002 |              2 | microprocessor | dirty       | low    | SCR          |          30 |
+      | EL-TR-003 |              2 | microprocessor | dirty       | low    | MG/Generator |        1020 |
+      | EL-TR-001 |              2 | microprocessor | dirty       | medium | AV/VVVF      |          30 |
+      | EL-TR-002 |              2 | microprocessor | dirty       | medium | SCR          |          35 |
+      | EL-TR-003 |              2 | microprocessor | dirty       | medium | MG/Generator |        1025 |
+      | EL-TR-001 |              2 | microprocessor | dirty       | high   | AV/VVVF      |          40 |
+      | EL-TR-002 |              2 | microprocessor | dirty       | high   | SCR          |          45 |
+      | EL-TR-003 |              2 | microprocessor | dirty       | high   | MG/Generator |        1035 |
+      | EL-TR-001 |              4 | microprocessor | clean       | low    | AV/VVVF      |          10 |
+      | EL-TR-002 |              4 | microprocessor | clean       | low    | SCR          |          15 |
+      | EL-TR-003 |              4 | microprocessor | clean       | low    | MG/Generator |        1005 |
+      | EL-TR-001 |              4 | microprocessor | clean       | medium | AV/VVVF      |          15 |
+      | EL-TR-002 |              4 | microprocessor | clean       | medium | SCR          |          20 |
+      | EL-TR-003 |              4 | microprocessor | clean       | medium | MG/Generator |        1010 |
+      | EL-TR-001 |              4 | microprocessor | clean       | high   | AV/VVVF      |          25 |
+      | EL-TR-002 |              4 | microprocessor | clean       | high   | SCR          |          30 |
+      | EL-TR-003 |              4 | microprocessor | clean       | high   | MG/Generator |        1020 |
+      | EL-TR-001 |              4 | microprocessor | moderate    | low    | AV/VVVF      |          15 |
+      | EL-TR-002 |              4 | microprocessor | moderate    | low    | SCR          |          20 |
+      | EL-TR-003 |              4 | microprocessor | moderate    | low    | MG/Generator |        1010 |
+      | EL-TR-001 |              4 | microprocessor | moderate    | medium | AV/VVVF      |          20 |
+      | EL-TR-002 |              4 | microprocessor | moderate    | medium | SCR          |          25 |
+      | EL-TR-003 |              4 | microprocessor | moderate    | medium | MG/Generator |        1015 |
+      | EL-TR-001 |              4 | microprocessor | moderate    | high   | AV/VVVF      |          30 |
+      | EL-TR-002 |              4 | microprocessor | moderate    | high   | SCR          |          35 |
+      | EL-TR-003 |              4 | microprocessor | moderate    | high   | MG/Generator |        1025 |
+      | EL-TR-001 |              4 | microprocessor | dirty       | low    | AV/VVVF      |          25 |
+      | EL-TR-002 |              4 | microprocessor | dirty       | low    | SCR          |          30 |
+      | EL-TR-003 |              4 | microprocessor | dirty       | low    | MG/Generator |        1020 |
+      | EL-TR-001 |              4 | microprocessor | dirty       | medium | AV/VVVF      |          30 |
+      | EL-TR-002 |              4 | microprocessor | dirty       | medium | SCR          |          35 |
+      | EL-TR-003 |              4 | microprocessor | dirty       | medium | MG/Generator |        1025 |
+      | EL-TR-001 |              4 | microprocessor | dirty       | high   | AV/VVVF      |          40 |
+      | EL-TR-002 |              4 | microprocessor | dirty       | high   | SCR          |          45 |
+      | EL-TR-003 |              4 | microprocessor | dirty       | high   | MG/Generator |        1035 |
+      #Second level callbacks [5,7]
+      | EL-TR-001 |              5 | microprocessor | clean       | low    | AV/VVVF      |          15 |
+      | EL-TR-002 |              5 | microprocessor | clean       | low    | SCR          |          20 |
+      | EL-TR-003 |              5 | microprocessor | clean       | low    | MG/Generator |        1010 |
+      | EL-TR-001 |              5 | microprocessor | clean       | medium | AV/VVVF      |          20 |
+      | EL-TR-002 |              5 | microprocessor | clean       | medium | SCR          |          25 |
+      | EL-TR-003 |              5 | microprocessor | clean       | medium | MG/Generator |        1015 |
+      | EL-TR-001 |              5 | microprocessor | clean       | high   | AV/VVVF      |          30 |
+      | EL-TR-002 |              5 | microprocessor | clean       | high   | SCR          |          35 |
+      | EL-TR-003 |              5 | microprocessor | clean       | high   | MG/Generator |        1025 |
+      | EL-TR-001 |              5 | microprocessor | moderate    | low    | AV/VVVF      |          20 |
+      | EL-TR-002 |              5 | microprocessor | moderate    | low    | SCR          |          25 |
+      | EL-TR-003 |              5 | microprocessor | moderate    | low    | MG/Generator |        1015 |
+      | EL-TR-001 |              5 | microprocessor | moderate    | medium | AV/VVVF      |          25 |
+      | EL-TR-002 |              5 | microprocessor | moderate    | medium | SCR          |          30 |
+      | EL-TR-003 |              5 | microprocessor | moderate    | medium | MG/Generator |        1020 |
+      | EL-TR-001 |              5 | microprocessor | moderate    | high   | AV/VVVF      |          35 |
+      | EL-TR-002 |              5 | microprocessor | moderate    | high   | SCR          |          40 |
+      | EL-TR-003 |              5 | microprocessor | moderate    | high   | MG/Generator |        1030 |
+      | EL-TR-001 |              5 | microprocessor | dirty       | low    | AV/VVVF      |          30 |
+      | EL-TR-002 |              5 | microprocessor | dirty       | low    | SCR          |          35 |
+      | EL-TR-003 |              5 | microprocessor | dirty       | low    | MG/Generator |        1025 |
+      | EL-TR-001 |              5 | microprocessor | dirty       | medium | AV/VVVF      |          35 |
+      | EL-TR-002 |              5 | microprocessor | dirty       | medium | SCR          |          40 |
+      | EL-TR-003 |              5 | microprocessor | dirty       | medium | MG/Generator |        1030 |
+      | EL-TR-001 |              5 | microprocessor | dirty       | high   | AV/VVVF      |          45 |
+      | EL-TR-002 |              5 | microprocessor | dirty       | high   | SCR          |          50 |
+      | EL-TR-003 |              5 | microprocessor | dirty       | high   | MG/Generator |        1040 |
+      | EL-TR-001 |              7 | microprocessor | clean       | low    | AV/VVVF      |          15 |
+      | EL-TR-002 |              7 | microprocessor | clean       | low    | SCR          |          20 |
+      | EL-TR-003 |              7 | microprocessor | clean       | low    | MG/Generator |        1010 |
+      | EL-TR-001 |              7 | microprocessor | clean       | medium | AV/VVVF      |          20 |
+      | EL-TR-002 |              7 | microprocessor | clean       | medium | SCR          |          25 |
+      | EL-TR-003 |              7 | microprocessor | clean       | medium | MG/Generator |        1015 |
+      | EL-TR-001 |              7 | microprocessor | clean       | high   | AV/VVVF      |          30 |
+      | EL-TR-002 |              7 | microprocessor | clean       | high   | SCR          |          35 |
+      | EL-TR-003 |              7 | microprocessor | clean       | high   | MG/Generator |        1025 |
+      | EL-TR-001 |              7 | microprocessor | moderate    | low    | AV/VVVF      |          20 |
+      | EL-TR-002 |              7 | microprocessor | moderate    | low    | SCR          |          25 |
+      | EL-TR-003 |              7 | microprocessor | moderate    | low    | MG/Generator |        1015 |
+      | EL-TR-001 |              7 | microprocessor | moderate    | medium | AV/VVVF      |          25 |
+      | EL-TR-002 |              7 | microprocessor | moderate    | medium | SCR          |          30 |
+      | EL-TR-003 |              7 | microprocessor | moderate    | medium | MG/Generator |        1020 |
+      | EL-TR-001 |              7 | microprocessor | moderate    | high   | AV/VVVF      |          35 |
+      | EL-TR-002 |              7 | microprocessor | moderate    | high   | SCR          |          40 |
+      | EL-TR-003 |              7 | microprocessor | moderate    | high   | MG/Generator |        1030 |
+      | EL-TR-001 |              7 | microprocessor | dirty       | low    | AV/VVVF      |          30 |
+      | EL-TR-002 |              7 | microprocessor | dirty       | low    | SCR          |          35 |
+      | EL-TR-003 |              7 | microprocessor | dirty       | low    | MG/Generator |        1025 |
+      | EL-TR-001 |              7 | microprocessor | dirty       | medium | AV/VVVF      |          35 |
+      | EL-TR-002 |              7 | microprocessor | dirty       | medium | SCR          |          40 |
+      | EL-TR-003 |              7 | microprocessor | dirty       | medium | MG/Generator |        1030 |
+      | EL-TR-001 |              7 | microprocessor | dirty       | high   | AV/VVVF      |          45 |
+      | EL-TR-002 |              7 | microprocessor | dirty       | high   | SCR          |          50 |
+      | EL-TR-003 |              7 | microprocessor | dirty       | high   | MG/Generator |        1040 |
+      #Second level callbacks [8,∞]
+      | EL-TR-001 |              8 | microprocessor | clean       | low    | AV/VVVF      |          30 |
+      | EL-TR-002 |              8 | microprocessor | clean       | low    | SCR          |          35 |
+      | EL-TR-003 |              8 | microprocessor | clean       | low    | MG/Generator |        1025 |
+      | EL-TR-001 |              8 | microprocessor | clean       | medium | AV/VVVF      |          35 |
+      | EL-TR-002 |              8 | microprocessor | clean       | medium | SCR          |          40 |
+      | EL-TR-003 |              8 | microprocessor | clean       | medium | MG/Generator |        1030 |
+      | EL-TR-001 |              8 | microprocessor | clean       | high   | AV/VVVF      |          45 |
+      | EL-TR-002 |              8 | microprocessor | clean       | high   | SCR          |          50 |
+      | EL-TR-003 |              8 | microprocessor | clean       | high   | MG/Generator |        1040 |
+      | EL-TR-001 |              8 | microprocessor | moderate    | low    | AV/VVVF      |          35 |
+      | EL-TR-002 |              8 | microprocessor | moderate    | low    | SCR          |          40 |
+      | EL-TR-003 |              8 | microprocessor | moderate    | low    | MG/Generator |        1030 |
+      | EL-TR-001 |              8 | microprocessor | moderate    | medium | AV/VVVF      |          40 |
+      | EL-TR-002 |              8 | microprocessor | moderate    | medium | SCR          |          45 |
+      | EL-TR-003 |              8 | microprocessor | moderate    | medium | MG/Generator |        1035 |
+      | EL-TR-001 |              8 | microprocessor | moderate    | high   | AV/VVVF      |          50 |
+      | EL-TR-002 |              8 | microprocessor | moderate    | high   | SCR          |          55 |
+      | EL-TR-003 |              8 | microprocessor | moderate    | high   | MG/Generator |        1045 |
+      | EL-TR-001 |              8 | microprocessor | dirty       | low    | AV/VVVF      |          45 |
+      | EL-TR-002 |              8 | microprocessor | dirty       | low    | SCR          |          50 |
+      | EL-TR-003 |              8 | microprocessor | dirty       | low    | MG/Generator |        1040 |
+      | EL-TR-001 |              8 | microprocessor | dirty       | medium | AV/VVVF      |          50 |
+      | EL-TR-002 |              8 | microprocessor | dirty       | medium | SCR          |          55 |
+      | EL-TR-003 |              8 | microprocessor | dirty       | medium | MG/Generator |        1045 |
+      | EL-TR-001 |              8 | microprocessor | dirty       | high   | AV/VVVF      |          60 |
+      | EL-TR-002 |              8 | microprocessor | dirty       | high   | SCR          |          65 |
+      | EL-TR-003 |              8 | microprocessor | dirty       | high   | MG/Generator |        1055 |
+      | EL-TR-001 |             80 | microprocessor | clean       | low    | AV/VVVF      |          30 |
+      | EL-TR-002 |             81 | microprocessor | clean       | low    | SCR          |          35 |
+      | EL-TR-003 |             82 | microprocessor | clean       | low    | MG/Generator |        1025 |
+      | EL-TR-001 |             83 | microprocessor | clean       | medium | AV/VVVF      |          35 |
+      | EL-TR-002 |             84 | microprocessor | clean       | medium | SCR          |          40 |
+      | EL-TR-003 |             85 | microprocessor | clean       | medium | MG/Generator |        1030 |
+      | EL-TR-001 |             86 | microprocessor | clean       | high   | AV/VVVF      |          45 |
+      | EL-TR-002 |             87 | microprocessor | clean       | high   | SCR          |          50 |
+      | EL-TR-003 |             88 | microprocessor | clean       | high   | MG/Generator |        1040 |
+      | EL-TR-001 |             89 | microprocessor | moderate    | low    | AV/VVVF      |          35 |
+      | EL-TR-002 |             90 | microprocessor | moderate    | low    | SCR          |          40 |
+      | EL-TR-003 |             91 | microprocessor | moderate    | low    | MG/Generator |        1030 |
+      | EL-TR-001 |             92 | microprocessor | moderate    | medium | AV/VVVF      |          40 |
+      | EL-TR-002 |             93 | microprocessor | moderate    | medium | SCR          |          45 |
+      | EL-TR-003 |             94 | microprocessor | moderate    | medium | MG/Generator |        1035 |
+      | EL-TR-001 |             95 | microprocessor | moderate    | high   | AV/VVVF      |          50 |
+      | EL-TR-002 |             96 | microprocessor | moderate    | high   | SCR          |          55 |
+      | EL-TR-003 |             97 | microprocessor | moderate    | high   | MG/Generator |        1045 |
+      | EL-TR-001 |             98 | microprocessor | dirty       | low    | AV/VVVF      |          45 |
+      | EL-TR-002 |             99 | microprocessor | dirty       | low    | SCR          |          50 |
+      | EL-TR-003 |            100 | microprocessor | dirty       | low    | MG/Generator |        1040 |
+      | EL-TR-001 |             50 | microprocessor | dirty       | medium | AV/VVVF      |          50 |
+      | EL-TR-002 |             51 | microprocessor | dirty       | medium | SCR          |          55 |
+      | EL-TR-003 |             52 | microprocessor | dirty       | medium | MG/Generator |        1045 |
+      | EL-TR-001 |             53 | microprocessor | dirty       | high   | AV/VVVF      |          60 |
+      | EL-TR-002 |             54 | microprocessor | dirty       | high   | SCR          |          65 |
+      | EL-TR-003 |             55 | microprocessor | dirty       | high   | MG/Generator |        1055 |
+      #
+      # When the environment is 'extreme', then give the highest score regardless of other variables
+      #
+      # First level callbacks [0,1]
+      | EL-TR-001 |              0 | microprocessor | extreme     | low    | AV/VVVF      |        1005 |
+      | EL-TR-002 |              0 | relay logic    | extreme     | low    | SCR          |        1025 |
+      | EL-TR-003 |              0 | microprocessor | extreme     | low    | MG/Generator |        2000 |
+      | EL-TR-001 |              0 | microprocessor | extreme     | medium | AV/VVVF      |        1010 |
+      | EL-TR-002 |              0 | microprocessor | extreme     | medium | SCR          |        1015 |
+      | EL-TR-003 |              0 | relay logic    | extreme     | medium | MG/Generator |        2020 |
+      | EL-TR-001 |              0 | microprocessor | extreme     | high   | AV/VVVF      |        1020 |
+      | EL-TR-002 |              0 | microprocessor | extreme     | high   | SCR          |        1025 |
+      | EL-TR-003 |              0 | microprocessor | extreme     | high   | MG/Generator |        2015 |
+      #Second level callbacks [2,4]
+      | EL-TR-001 |              2 | microprocessor | extreme     | low    | AV/VVVF      |        1010 |
+      | EL-TR-002 |              2 | microprocessor | extreme     | low    | SCR          |        1015 |
+      | EL-TR-003 |              2 | microprocessor | extreme     | low    | MG/Generator |        2005 |
+      | EL-TR-001 |              2 | microprocessor | extreme     | medium | AV/VVVF      |        1015 |
+      | EL-TR-002 |              2 | microprocessor | extreme     | medium | SCR          |        1020 |
+      | EL-TR-003 |              2 | microprocessor | extreme     | medium | MG/Generator |        2010 |
+      | EL-TR-001 |              2 | microprocessor | extreme     | high   | AV/VVVF      |        1025 |
+      | EL-TR-002 |              2 | microprocessor | extreme     | high   | SCR          |        1030 |
+      | EL-TR-003 |              2 | microprocessor | extreme     | high   | MG/Generator |        2020 |
+      #Second level callbacks [5,7]
+      | EL-TR-001 |              5 | microprocessor | extreme     | low    | AV/VVVF      |        1015 |
+      | EL-TR-002 |              5 | microprocessor | extreme     | low    | SCR          |        1020 |
+      | EL-TR-003 |              5 | microprocessor | extreme     | low    | MG/Generator |        2010 |
+      | EL-TR-001 |              5 | microprocessor | extreme     | medium | AV/VVVF      |        1020 |
+      | EL-TR-002 |              5 | microprocessor | extreme     | medium | SCR          |        1025 |
+      | EL-TR-003 |              5 | microprocessor | extreme     | medium | MG/Generator |        2015 |
+      | EL-TR-001 |              5 | microprocessor | extreme     | high   | AV/VVVF      |        1030 |
+      | EL-TR-002 |              5 | microprocessor | extreme     | high   | SCR          |        1035 |
+      | EL-TR-003 |              5 | microprocessor | extreme     | high   | MG/Generator |        2025 |
+      #Second level callbacks [8,∞]
+      | EL-TR-001 |              8 | microprocessor | extreme     | low    | AV/VVVF      |        1030 |
+      | EL-TR-002 |              8 | microprocessor | extreme     | low    | SCR          |        1035 |
+      | EL-TR-003 |              8 | microprocessor | extreme     | low    | MG/Generator |        2025 |
+      | EL-TR-001 |              8 | microprocessor | extreme     | medium | AV/VVVF      |        1035 |
+      | EL-TR-002 |              8 | microprocessor | extreme     | medium | SCR          |        1040 |
+      | EL-TR-003 |              8 | microprocessor | extreme     | medium | MG/Generator |        2030 |
+      | EL-TR-001 |              8 | microprocessor | extreme     | high   | AV/VVVF      |        1045 |
+      | EL-TR-002 |              8 | microprocessor | extreme     | high   | SCR          |        1050 |
+      | EL-TR-003 |              8 | microprocessor | extreme     | high   | MG/Generator |        2040 |

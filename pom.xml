@@ -1,0 +1,172 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tke.servicesight.rules</groupId>
+	<artifactId>service-sight-rules</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>kjar</packaging>
+
+
+	<properties>
+		<kie.version>6.4.0.Final-redhat-8</kie.version>
+		<cucumber.version>1.2.5</cucumber.version>
+		<javaassist.version>3.19.0-GA</javaassist.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>${kie.version}</version>
+
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>${kie.version}</version>
+
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bpmn2</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kie.server</groupId>
+			<artifactId>kie-server-client</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javaassist.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+<dependency>
+    <groupId>org.codehaus.jackson</groupId>
+    <artifactId>jackson-core-asl</artifactId>
+    <version>1.9.13.redhat-3</version>
+</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<version>${kie.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>2.0.3</version>
+                <executions>
+                    <execution>
+                        <id>jmeter</id>
+                        <goals>
+                            <goal>jmeter</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <testFilesDirectory>resources/jmeter/</testFilesDirectory>
+					<customPropertiesFiles>
+                        <file>resources/jmeter/jmeter.properties</file>
+                    </customPropertiesFiles>
+					<overrideRootLogLevel>DEBUG</overrideRootLogLevel>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-analysis-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+						<id>jmeter-analysis</id>
+                        <goals>
+                            <goal>analyze</goal>
+                        </goals>
+                    </execution>
+                </executions>
+				<configuration>
+					<source>${project.build.directory}/**/*.jtl</source>
+					<targetDirectory>${project.build.directory}/results</targetDirectory>
+					<checkResult>
+						<errors>
+							<threshold>0</threshold>
+							<toleranceDirection>UPPER_LOWER_TOLERANCE</toleranceDirection>
+							<tolerance>0</tolerance>
+						</errors>
+					</checkResult>
+				</configuration>
+            </plugin>
+		</plugins>
+		<!-- This pluginManagement is used to fix the following Eclipse error: -->
+		<!-- Plugin execution not covered by lifecycle configuration: org.kie:kie-maven-plugin:xxx.Final:build 
+			(execution: default-build, phase: compile) -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.kie</groupId>
+										<artifactId>kie-maven-plugin</artifactId>
+										<versionRange>[6.0.0,)</versionRange>
+										<goals>
+											<goal>build</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
