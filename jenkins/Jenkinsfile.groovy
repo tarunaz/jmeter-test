@@ -1,4 +1,4 @@
-node('jdk8') {
+node('maven') {
    def mvnHome, jenkinsHome, javaHome
    stage('Build') {
        // Get the Maven tool.
