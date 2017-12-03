@@ -2,7 +2,8 @@ node('maven-fortify') {
 
    stage('checkout') {
     
-       checkout scm
+       checkout scm 
+       sleep 120
    }
   
    stage('JMeter Test Verification using jmx file directly') {
