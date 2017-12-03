@@ -5,11 +5,35 @@ node('maven-fortify') {
        checkout scm
    }
   
-   stage('JMeter Test Verification') {
-
+   stage('JMeter Test Verification using jmx file directly') {
+    // Expect jmx files within the jmeter folder
+    sh"""
+        # Run the JMeter testsFile
+        /opt/apache-jmeter-3.3/bin/jmeter -n -t resources/jmeter/HTTP Request.jmx -l HTTP Request.jtl
+    """
    }
+   
+   performanceReport compareBuildPrevious: false,
+        configType: 'ART',
+        errorFailedThreshold: 0,
+        errorUnstableResponseTimeThreshold: '',
+        errorUnstableThreshold: 0,
+        failBuildIfNoResultFile: false,
+        ignoreFailedBuild: false,
+        ignoreUnstableBuild: true,
+        modeOfThreshold: false,
+        modePerformancePerTestCase: true,
+        modeThroughput: true,
+        nthBuildNumber: 0,
+        parsers: [[$class: 'JMeterParser', glob: 'HTTP Request.jtl']],
+        relativeFailedThresholdNegative: 0,
+        relativeFailedThresholdPositive: 0,
+        relativeUnstableThresholdNegative: 0,
+        relativeUnstableThresholdPositive: 0
 
-   stage('JMeter Test Verification') {
+
+
+   stage('JMeter Test Verification using maven plugin') {
        // Finds the route for the rules dev endpoint and overwrites the hostname property in jmeter.proerties with that value.
        // We have to send the output to a file rather than a variable because otherwise we'd have nested backticks.
        sh "oc get route -n tarun-jmeter | grep rules | awk '{print \$2}' > ROUTE"
