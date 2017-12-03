@@ -1,5 +1,10 @@
 node('maven-fortify') {
 
+   stage('checkout') {
+    
+       checkout scm
+   }
+  
    stage('JMeter Test Verification') {
 
    }
