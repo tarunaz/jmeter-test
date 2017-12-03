@@ -10,7 +10,7 @@ node('maven-fortify') {
     // Expect jmx files within the jmeter folder
     sh"""
         # Run the JMeter testsFile
-        /opt/apache-jmeter-3.3/bin/jmeter -n -t resources/jmeter/HTTP Request.jmx -l HTTP Request.jtl
+        /apache-jmeter-3.3/bin/jmeter -n -t resources/jmeter/HTTP Request.jmx -l HTTP Request.jtl
     """
    }
    
