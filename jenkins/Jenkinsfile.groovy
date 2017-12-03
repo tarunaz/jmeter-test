@@ -1,4 +1,4 @@
-node('maven') {
+node('maven-fortify') {
 
    stage('JMeter Test Verification') {
 
