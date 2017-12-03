@@ -5,7 +5,7 @@ node('maven') {
        // checkout code from GitHub
        checkout scm 
       
-       sh "mvn clean install -DskipTests"
+       sh "mvn -s settings.xml clean install -DskipTests"
    }
    stage('OpenShift Build') {
        sh "rm -rf ocp-build && mkdir -p ocp-build/deployments"
@@ -24,6 +24,6 @@ node('maven') {
        sh "sed -i \"s/hostname=.*/hostname=\$(cat ROUTE)/g\" resources/jmeter/jmeter.properties"
        sh "rm -f ROUTE"
        // Runs JMeter tests and analysis of test results
-       sh "mvn jmeter:jmeter jmeter-analysis:analyze"
+       sh "mvn -s settings.xml jmeter:jmeter jmeter-analysis:analyze"
    }
 }
