@@ -15,7 +15,8 @@ node('maven') {
    }
    stage('OpenShift Deployment') {
        echo "Waiting on OpenShift Deployment..."
-       openshiftVerifyDeployment depCfg: 'rules', namespace: 'tarun-jmeter', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'true', waitTime: '300', waitUnit: 'sec'
+       //openshiftVerifyDeployment depCfg: 'rules', namespace: 'tarun-jmeter', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'true', waitTime: '300', waitUnit: 'sec'
+       sleep 200
    }
    stage('JMeter Test Verification') {
        // Finds the route for the rules dev endpoint and overwrites the hostname property in jmeter.proerties with that value.
