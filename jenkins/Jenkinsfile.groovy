@@ -30,7 +30,7 @@ node('maven-fortify') {
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
         relativeUnstableThresholdPositive: 0
- 
+   
 
    stage('JMeter Test Verification using maven plugin') {
        // Finds the route for the rules dev endpoint and overwrites the hostname property in jmeter.proerties with that value.
@@ -60,3 +60,5 @@ node('maven-fortify') {
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
         relativeUnstableThresholdPositive: 0
+
+}
