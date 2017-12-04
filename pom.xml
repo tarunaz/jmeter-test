@@ -105,11 +105,12 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <testResultsTimestamp>false</testResultsTimestamp>
                     <testFilesDirectory>resources/jmeter/</testFilesDirectory>
 					<customPropertiesFiles>
                         <file>resources/jmeter/jmeter.properties</file>
                     </customPropertiesFiles>
-					<overrideRootLogLevel>DEBUG</overrideRootLogLevel>
+	            <overrideRootLogLevel>DEBUG</overrideRootLogLevel>
                 </configuration>
             </plugin>
             <plugin>
@@ -117,14 +118,13 @@
                 <artifactId>jmeter-analysis-maven-plugin</artifactId>
                 <executions>
                     <execution>
-						<id>jmeter-analysis</id>
+			<id>jmeter-analysis</id>
                         <goals>
                             <goal>analyze</goal>
                         </goals>
                     </execution>
                 </executions>
 		<configuration>
-                        <testResultsTimestamp>false</testResultsTimestamp>
 			<source>${project.build.directory}/**/*.jtl</source>
 			<targetDirectory>${project.build.directory}/results</targetDirectory>
 			<checkResult>
