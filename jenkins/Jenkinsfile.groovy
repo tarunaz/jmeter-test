@@ -60,7 +60,7 @@ node('maven-fortify') {
        sh "rm -f ROUTE"
        
        // Runs JMeter tests and analysis of test results
-       sh "mvn -s settings.xml jmeter:jmeter jmeter-analysis:analyze"
+       sh "mvn -s settings.xml -Dmaven.repo.local=/etc/.m2 jmeter:jmeter jmeter-analysis:analyze"
    }
    // Running Performance Plugin with JMeter to show results
     performanceReport compareBuildPrevious: false,
@@ -75,7 +75,25 @@ node('maven-fortify') {
         modePerformancePerTestCase: true,
         modeThroughput: true,
         nthBuildNumber: 0,
-        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/20171203-HTTP Request.jtl']],
+        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/HTTP Request.jtl']],
+        relativeFailedThresholdNegative: 0,
+        relativeFailedThresholdPositive: 0,
+        relativeUnstableThresholdNegative: 0,
+        relativeUnstableThresholdPositive: 0
+
+    performanceReport compareBuildPrevious: false,
+        configType: 'ART',
+        errorFailedThreshold: 0,
+        errorUnstableResponseTimeThreshold: '',
+        errorUnstableThreshold: 0,
+        failBuildIfNoResultFile: false,
+        ignoreFailedBuild: false,
+        ignoreUnstableBuild: true,
+        modeOfThreshold: false,
+        modePerformancePerTestCase: true,
+        modeThroughput: true,
+        nthBuildNumber: 0,
+        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/TKE_Scoring.jtl']],
         relativeFailedThresholdNegative: 0,
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
