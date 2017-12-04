@@ -9,8 +9,8 @@ node('maven-fortify') {
     // Expect jmx files within the jmeter folder
     sh"""
         # Run the JMeter testsFile
-        /apache-jmeter-3.3/bin/jmeter -n -t "resources/jmeter/HTTP Request.jmx" -l "HTTP Request.jtl"
-        /apache-jmeter-3.3/bin/jmeter -n -t resources/jmeter/TKE_Scoring.jmx -l TKE_Scoring.jtl
+        ${JMETER_HOME}/bin/jmeter -n -t "resources/jmeter/HTTP Request.jmx" -l "target/jmeter/results/HTTP Request.jtl"
+        ${JMETER_HOME}/bin/jmeter -n -t resources/jmeter/TKE_Scoring.jmx -l target/jmeter/results/TKE_Scoring.jtl
     """
    }
    
@@ -26,7 +26,25 @@ node('maven-fortify') {
         modePerformancePerTestCase: true,
         modeThroughput: true,
         nthBuildNumber: 0,
-        parsers: [[$class: 'JMeterParser', glob: 'HTTP Request.jtl']],
+        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/HTTP Request.jtl']],
+        relativeFailedThresholdNegative: 0,
+        relativeFailedThresholdPositive: 0,
+        relativeUnstableThresholdNegative: 0,
+        relativeUnstableThresholdPositive: 0
+   
+   performanceReport compareBuildPrevious: false,
+        configType: 'ART',
+        errorFailedThreshold: 0,
+        errorUnstableResponseTimeThreshold: '',
+        errorUnstableThreshold: 0,
+        failBuildIfNoResultFile: false,
+        ignoreFailedBuild: false,
+        ignoreUnstableBuild: true,
+        modeOfThreshold: false,
+        modePerformancePerTestCase: true,
+        modeThroughput: true,
+        nthBuildNumber: 0,
+        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/TKE_Scoring.jtl']],
         relativeFailedThresholdNegative: 0,
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
@@ -40,6 +58,7 @@ node('maven-fortify') {
        sh "oc get route -n tarun-jmeter | grep rules | awk '{print \$2}' > ROUTE"
        sh "sed -i \"s/hostname=.*/hostname=\$(cat ROUTE)/g\" resources/jmeter/jmeter.properties"
        sh "rm -f ROUTE"
+       
        // Runs JMeter tests and analysis of test results
        sh "mvn -s settings.xml jmeter:jmeter jmeter-analysis:analyze"
    }

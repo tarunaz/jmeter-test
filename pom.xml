@@ -123,17 +123,18 @@
                         </goals>
                     </execution>
                 </executions>
-				<configuration>
-					<source>${project.build.directory}/**/*.jtl</source>
-					<targetDirectory>${project.build.directory}/results</targetDirectory>
-					<checkResult>
-						<errors>
-							<threshold>0</threshold>
-							<toleranceDirection>UPPER_LOWER_TOLERANCE</toleranceDirection>
-							<tolerance>0</tolerance>
-						</errors>
-					</checkResult>
-				</configuration>
+		<configuration>
+                        <testResultsTimestamp>false</testResultsTimestamp>
+			<source>${project.build.directory}/**/*.jtl</source>
+			<targetDirectory>${project.build.directory}/results</targetDirectory>
+			<checkResult>
+				<errors>
+					<threshold>0</threshold>
+					<toleranceDirection>UPPER_LOWER_TOLERANCE</toleranceDirection>
+					<tolerance>0</tolerance>
+				</errors>
+			</checkResult>
+		</configuration>
             </plugin>
 		</plugins>
 		<!-- This pluginManagement is used to fix the following Eclipse error: -->
