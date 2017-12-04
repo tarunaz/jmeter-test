@@ -10,7 +10,6 @@ node('maven-fortify') {
     sh"""
         # Run the JMeter testsFile
         ${JMETER_HOME}/bin/jmeter -n -t "resources/jmeter/HTTP Request.jmx" -l "target/jmeter/results/HTTP Request.jtl"
-        ${JMETER_HOME}/bin/jmeter -n -t resources/jmeter/TKE_Scoring.jmx -l target/jmeter/results/TKE_Scoring.jtl
     """
    }
    
@@ -31,26 +30,7 @@ node('maven-fortify') {
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
         relativeUnstableThresholdPositive: 0
-   
-   performanceReport compareBuildPrevious: false,
-        configType: 'ART',
-        errorFailedThreshold: 0,
-        errorUnstableResponseTimeThreshold: '',
-        errorUnstableThreshold: 0,
-        failBuildIfNoResultFile: false,
-        ignoreFailedBuild: false,
-        ignoreUnstableBuild: true,
-        modeOfThreshold: false,
-        modePerformancePerTestCase: true,
-        modeThroughput: true,
-        nthBuildNumber: 0,
-        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/TKE_Scoring.jtl']],
-        relativeFailedThresholdNegative: 0,
-        relativeFailedThresholdPositive: 0,
-        relativeUnstableThresholdNegative: 0,
-        relativeUnstableThresholdPositive: 0
-
-
+ 
 
    stage('JMeter Test Verification using maven plugin') {
        // Finds the route for the rules dev endpoint and overwrites the hostname property in jmeter.proerties with that value.
@@ -80,23 +60,3 @@ node('maven-fortify') {
         relativeFailedThresholdPositive: 0,
         relativeUnstableThresholdNegative: 0,
         relativeUnstableThresholdPositive: 0
-
-    performanceReport compareBuildPrevious: false,
-        configType: 'ART',
-        errorFailedThreshold: 0,
-        errorUnstableResponseTimeThreshold: '',
-        errorUnstableThreshold: 0,
-        failBuildIfNoResultFile: false,
-        ignoreFailedBuild: false,
-        ignoreUnstableBuild: true,
-        modeOfThreshold: false,
-        modePerformancePerTestCase: true,
-        modeThroughput: true,
-        nthBuildNumber: 0,
-        parsers: [[$class: 'JMeterParser', glob: 'target/jmeter/results/TKE_Scoring.jtl']],
-        relativeFailedThresholdNegative: 0,
-        relativeFailedThresholdPositive: 0,
-        relativeUnstableThresholdNegative: 0,
-        relativeUnstableThresholdPositive: 0
-
-}
